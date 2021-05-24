@@ -103,3 +103,8 @@ dput(y)
 dput(y,file="y.R")
 new.y <- dget("y.R")
 new.y
+
+#R Programming > Week 1 > Subsetting
+
+
+    

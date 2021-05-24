@@ -93,5 +93,13 @@ m <- matrix(1:4, nrow=2, ncol=2)
 dimnames(m) <- list(c("a","b"),c("c","d"))
 m
 
-#R Programming > Week 1 > Reading Data ----
+#R Programming > Week 1 > Textual Data ----
+#dput-ting R objects
 
+y <- data.frame(a=1,b="a")
+y
+dput(y)
+
+dput(y,file="y.R")
+new.y <- dget("y.R")
+new.y

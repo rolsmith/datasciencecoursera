@@ -1,21 +1,83 @@
-
-?cor
-
-#corr <- function(directory, threshold = 0) {
-  ## 'directory' is a character vector of 1 indicating
-  ## the location of the CSV files
+corr <- function(directory, threshold = 0) {
+  setwd(file.path(getwd(), directory)) ## setting the directory
   
-  ## 'threshold' is a numeric vector of length 1 indicating
-  ## the number of completely observed observations (on all
-  ## variables) required to compute the correlation between
-  ## nitrate and sulfate, the default is 0
+  correlationVector = NULL ## initializing the correlation matrix
   
-  ## return a numeric vector of correlations
-  ## NOTE: do not round the result
-#}
+  #Looping thru ALL the directory's files 
+  for (i in 1:332)
+  {
+    
+    
+    ## Due to the format of the filename, i.e 001, 010  instead of 1, 10. I became aware that the following method works but not efficient, 
+    ## but at the time of the completion of this assignment, it was the only way I knew how to do it.           
+    if (i <10) { 
+      data <- read.csv(
+        paste("0","0", as.character(i), ".csv", sep=""),  ## for example, if 'id' =7, we get 007.csv
+        header = T, 
+        na.strings=c("NA","NaN", " ")
+        
+      )
+    }
+    
+    else if (i>=10 & i<100) { 
+      data <- read.csv(
+        paste("0", as.character(i), ".csv", sep=""),  ## for example, if 'id' = 17, we get 017.csv
+        header = T, 
+        na.strings=c("NA","NaN", " ") 
+        
+      )
+    }
+    
+    
+    
+    else       { 
+      data <- read.csv(
+        paste(as.character(i), ".csv", sep=""),     ## Normal
+        header = T, 
+        na.strings=c("NA","NaN", " ") 
+        
+      )
+    }
+    
+    ## getting rid of all the "NA" values and, consequently, all the non-complete ovservations (the ones with at least one NA in row)
+    data = na.omit(data) 
+    
+    ## if the number of complete observed cases meets the quota, find the correlation between the pollutants for the given monitor AND
+    ## store the results in the correlation matrix
+    if (nrow(data) > threshold) {
+      correlationVector = c(correlationVector, cor(data[,2], data[,3]))
+    }
+    
+    
+  }
+  
+  
+  
+  setwd("..")  # reseting working directory path
+  return (correlationVector)
+}
+source("corr.R")
+source("complete.R")
+cr <- corr("specdata", 150)
+head(cr)
 
-directory="specdata"
-specdata.list=c(list.files(directory))
-specdata.list
+cr <- corr("specdata")                
+cr <- sort(cr)   
+RNGversion("3.5.1")
+set.seed(868)                
+out <- round(cr[sample(length(cr), 5)], 4)
+print(out)
 
-read.id.file <- read.csv(paste(directory,[i],s)
+cr <- corr("specdata", 129)                
+cr <- sort(cr)                
+n <- length(cr)    
+RNGversion("3.5.1")
+set.seed(197)                
+out <- c(n, round(cr[sample(n, 5)], 4))
+print(out)
+
+cr <- corr("specdata", 2000)                
+n <- length(cr)                
+cr <- corr("specdata", 1000)                
+cr <- sort(cr)
+print(c(n, round(cr, 4)))

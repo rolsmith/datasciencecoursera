@@ -1,8 +1,5 @@
 
 # "/Users/RolandSmith/Documents/R-Learning/Coursera/datasciencecoursera/specdata/"
-
-complete <- function(directory,id=1:332){
-  
   # identify files to read from disk
   
   # read files in order specified by id argument and create nobs vector
@@ -13,7 +10,7 @@ complete <- function(directory,id=1:332){
 
 complete <- function (directory, id) {
   
-  specdata.list=c(list.files(directory))
+  specdata.list<-c(list.files(directory))
   nobs <- numeric()
   
   for (i in id) {
@@ -25,4 +22,15 @@ complete <- function (directory, id) {
   
   data.frame(id,nobs)
 }
-complete("specdata", 1)
+
+cc <- complete("specdata", c(6, 10, 20, 34, 100, 200, 310))
+print(cc$nobs)
+
+cc <- complete("specdata", 54)
+print(cc$nobs)
+
+RNGversion("3.5.1")  
+set.seed(42)
+cc <- complete("specdata", 332:1)
+use <- sample(332, 10)
+print(cc[use, "nobs"])

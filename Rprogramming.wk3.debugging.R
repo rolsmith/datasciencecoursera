@@ -1,7 +1,7 @@
 ##%######################################################%##
 #                                                          #
 ####       Coursera > R Programming > Wk3 modules       ####
-####        and Quiz Roland Smith > 18 june 2021        ####
+####       Roland Smith > 18 june 2021        ####
 #                                                          #
 ##%######################################################%##
 
@@ -53,4 +53,4 @@ trace0back()
 
 #### You have to call traceback _immediately_
 
-
+?summary
